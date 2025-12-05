@@ -17,6 +17,8 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for stateless API
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/v1/shorten").authenticated() // Auth required for POST /shorten
+                        .requestMatchers("/api/v1/*").permitAll() // Public access to redirect (GET /{id})
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 
